@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+{% block main %}
+  <div class="content-section">
+    <form action="" method="POST" class="text-center">
+      <!-- adds CSRF token -->
+      {{ form.hidden_tag() }}
+      <fieldset class="form-group skinny-form">
+        <legend class="border-bottom mb-4">Get Quote</legend>
+        <div class="form-group">
+          {{ form.symbol.label(class="form-control-label") }} 
+          {% if form.symbol.errors %}
+            {{ form.symbol(class="form-control form-control-lg is-invalid") }}
+            <div class='invalid-feedback'>
+              {% for error in form.symbol.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.symbol(class="form-control form-control-lg") }}
+          {% endif %}
+        </div>
+      </fieldset>
+      <div class="form-group">
+        {{ form.submit(class="btn btn-outline-info") }}
+      </div>
+    </form>
+  </div>
+  {% if not first_load %}
+    {% if stock_data %}
+      <div class="content-section">
+        <table class="table table-striped">
+          <thead class="thead-dark">
+              <tr>
+                  <th scope="col">Symbol</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">ytdChange</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>{{ stock_data["symbol"] }}</td>
+                  <td>{{ stock_data["companyName"] }}</td>
+                  <td>{{ usd(stock_data["latestPrice"]) }}</td>
+                  <td>{{ shorten_dec(stock_data["ytdChange"]) }}</td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class='text-center'>Unable to locate data for symbol "{{ symbol }}"</p> 
+    {% endif %}
+  {% endif %}
+  
+{% endblock main %}

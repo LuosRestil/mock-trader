@@ -35,18 +35,18 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbar">
-        {% if session.user_id %}
+        {% if current_user.is_authenticated %}
         <ul class="navbar-nav mr-auto mt-2">
-          <li class="nav-item"><a class="nav-link" href="/quote">Quote</a></li>
-          <li class="nav-item"><a class="nav-link" href="/buy">Buy</a></li>
-          <li class="nav-item"><a class="nav-link" href="/sell">Sell</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('quote') }}">Quote</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('buy') }}">Buy</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('sell') }}">Sell</a></li>
           <li class="nav-item">
-            <a class="nav-link" href="/history">History</a>
+            <a class="nav-link" href="{{ url_for('history') }}">History</a>
           </li>
         </ul>
         <ul class="navbar-nav ml-auto mt-2">
           <li class="nav-item">
-            <a class="nav-link" href="/password_reset">Reset Password</a>
+            <a class="nav-link" href="{{ url_for('reset_password') }}">Reset Password</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/logout">Log Out</a>
@@ -55,30 +55,31 @@
         {% else %}
         <ul class="navbar-nav ml-auto mt-2">
           <li class="nav-item">
-            <a class="nav-link" href="/register">Register</a>
+            <a class="nav-link" href="{{ url_for('register') }}">Register</a>
           </li>
-          <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Log In</a></li>
         </ul>
         {% endif %}
       </div>
     </nav>
 
-    {% if get_flashed_messages() %}
-    <header>
-      <div class="alert alert-primary border text-center" role="alert">
-        {{ get_flashed_messages() | join(" ") }}
-      </div>
-    </header>
-    {% endif %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class='alert alert-{{ category }} text-center'>
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
 
     <main class="container p-5">
       {% block main %}{% endblock %}
     </main>
 
     <footer class="small text-center text-muted">
-      Data provided for free by
-      <a href="https://iextrading.com/developer">IEX</a>. View
-      <a href="https://iextrading.com/api-exhibit-a/">IEX’s Terms of Use</a>.
+      Data provided by
+      <a href="https://iextrading.com/developer">IEX Cloud</a>. 
     </footer>
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

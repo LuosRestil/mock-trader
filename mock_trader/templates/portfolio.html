@@ -1,0 +1,49 @@
+{% extends 'layout.html' %} 
+{% block main %}
+  {% if portfolio_length == 0 %}
+    <div class="container mb-4">
+      <p class="text-center">Your stock portfolio is empty.</p>
+      <p class="text-center">Get a <a href="{{ url_for('quote') }}">quote</a> and <a href="{{ url_for('buy') }}">buy</a> your first stock.</p>
+    </div>
+  {% endif %}
+    <table class='table table-dark'>
+      <thead class='thead thead-dark'>
+        <tr>
+          <th scope='col'>
+            Stock
+          </th>
+          <th scope='col'>
+            Shares
+          </th>
+          <th scope='col'>
+            Current Price
+          </th>
+          <th scope='col'>
+            Total Value
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in range(portfolio_length) %}
+          <tr>
+            <td>{{ stocks[i] }}</td>
+            <td>{{ shares[i] }}</td>
+            <td>{{ prices[i] }}</td>
+            <td>{{ total_values[i] }}</td>
+          </tr>
+        {% endfor %}
+        <tr class="bg-success">
+          <td>CASH</td>
+          <td></td>
+          <td></td>
+          <td>{{ cash }}</td>
+        </tr>
+        <tr class="bg-info">
+            <td>Net Worth</td>
+            <td></td>
+            <td></td>
+            <td>{{ net_worth }}</td>
+        </tr>
+      </tbody>
+    </table>
+{% endblock main %}
