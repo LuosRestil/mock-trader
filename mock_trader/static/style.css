@@ -24,7 +24,7 @@
     padding: 3rem 0 3rem 0 !important;
   }
   form {
-    margin-left: 1rem !important;
-    margin-right: 1rem !important;
+    margin-left: 1rem;
+    margin-right: 1rem;
   }
 }
