@@ -23,4 +23,8 @@
   .p-5 {
     padding: 3rem 0 3rem 0 !important;
   }
+  form {
+    margin-left: 1rem !important;
+    margin-right: 1rem !important;
+  }
 }
