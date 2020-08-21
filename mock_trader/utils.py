@@ -10,8 +10,7 @@ def usd(value):
 
 def lookup(symbol):
     """ Look up stock data by symbol """
-    # api_key = os.environ.get('API_KEY')
-    api_key = 'pk_337627f2c3e94b50ac2a52ee49fb92a7'
+    api_key = os.environ.get('API_KEY')
     try:
         r = requests.get(f"https://cloud-sse.iexapis.com/stable/stock/{symbol}/quote?token={api_key}")
         print(r)
